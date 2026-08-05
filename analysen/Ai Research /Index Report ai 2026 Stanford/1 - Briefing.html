@@ -1,0 +1,524 @@
+<meta charset="UTF-8">
+<title>AI Index 2026 — Briefing</title>
+<meta name="description" content="Auswertung des Stanford AI Index Report 2026: wo Claude technisch steht, was wirtschaftlich zaehlt, und ein Lernpfad zum Produzieren.">
+<style>
+  :root{
+    --paper: #EFEEE7;
+    --paper-raised: #F8F7F2;
+    --ink: #1A1D2B;
+    --ink-soft: #4B5063;
+    --ink-faint: #8B8D7F;
+    --accent: #C4622D;
+    --accent-2: #1B8A73;
+    --line: #DAD7C9;
+    --bar-track: #E2E0D3;
+    --shadow: 0 1px 2px rgba(26,29,43,0.06), 0 8px 24px rgba(26,29,43,0.05);
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --paper: #14161B;
+      --paper-raised: #1B1E25;
+      --ink: #EDEBE3;
+      --ink-soft: #A6A9B8;
+      --ink-faint: #6E7280;
+      --accent: #C96C3A;
+      --accent-2: #2FA689;
+      --line: #2B2E38;
+      --bar-track: #23262F;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 12px 28px rgba(0,0,0,0.35);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper: #14161B; --paper-raised: #1B1E25; --ink: #EDEBE3; --ink-soft: #A6A9B8;
+    --ink-faint: #6E7280; --accent: #C96C3A; --accent-2: #2FA689; --line: #2B2E38;
+    --bar-track: #23262F; --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 12px 28px rgba(0,0,0,0.35);
+    color-scheme: dark;
+  }
+  :root[data-theme="light"]{
+    --paper: #EFEEE7; --paper-raised: #F8F7F2; --ink: #1A1D2B; --ink-soft: #4B5063;
+    --ink-faint: #8B8D7F; --accent: #C4622D; --accent-2: #1B8A73; --line: #DAD7C9;
+    --bar-track: #E2E0D3; --shadow: 0 1px 2px rgba(26,29,43,0.06), 0 8px 24px rgba(26,29,43,0.05);
+    color-scheme: light;
+  }
+
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family: -apple-system, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size:17px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}
+  }
+  a{color:var(--accent);}
+  h1,h2,h3{
+    font-family: Georgia, "Iowan Old Style", "Palatino Linotype", "Times New Roman", serif;
+    text-wrap:balance;
+    font-weight:600;
+    letter-spacing:-0.01em;
+    margin:0;
+  }
+  .mono, .num{
+    font-family: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+  .wrap{max-width:760px; margin:0 auto; padding:0 24px;}
+  .wide{max-width:920px; margin:0 auto; padding:0 24px;}
+
+  /* Masthead */
+  .masthead{
+    background:var(--ink);
+    color:var(--paper);
+    padding:64px 24px 48px;
+  }
+  .masthead .inner{max-width:760px; margin:0 auto;}
+  .eyebrow{
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size:12px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    opacity:0.68;
+    display:flex;
+    gap:10px;
+    align-items:center;
+    margin-bottom:18px;
+    flex-wrap:wrap;
+  }
+  .eyebrow .dot{width:5px; height:5px; border-radius:50%; background:var(--accent);}
+  .masthead h1{
+    font-size:clamp(32px, 5vw, 46px);
+    line-height:1.08;
+    color:var(--paper);
+  }
+  .masthead .sub{
+    margin-top:16px;
+    font-size:18px;
+    max-width:56ch;
+    opacity:0.82;
+    line-height:1.55;
+  }
+  .masthead .meta{
+    margin-top:32px;
+    display:flex;
+    gap:28px;
+    flex-wrap:wrap;
+    font-size:13px;
+    opacity:0.65;
+  }
+  .masthead .meta b{color:var(--paper); font-weight:600; opacity:1;}
+  .companion{
+    margin-top:28px;
+    padding:12px 16px;
+    border:1px solid rgba(239,238,231,0.22);
+    border-radius:8px;
+    font-size:13px;
+    opacity:0.85;
+    display:inline-block;
+  }
+  .companion a{color:var(--paper); text-decoration:underline; opacity:1;}
+
+  main{padding:0 0 80px;}
+
+  section{padding:56px 0;}
+  section + section{border-top:1px solid var(--line);}
+
+  .kicker{
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size:12px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:10px;
+    display:block;
+  }
+  .kicker.teal{color:var(--accent-2);}
+  h2.title{font-size:clamp(24px,3.4vw,30px); margin-bottom:6px;}
+  .chapter-tag{
+    font-size:13px;
+    color:var(--ink-faint);
+    margin-bottom:22px;
+  }
+  p{margin:0 0 16px;}
+  p:last-child{margin-bottom:0;}
+  .lede{font-size:19px; color:var(--ink-soft); max-width:64ch;}
+
+  /* Stat strip */
+  .statgrid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+    border-radius:4px;
+    overflow:hidden;
+    margin-top:28px;
+  }
+  .stat{
+    background:var(--paper-raised);
+    padding:22px 20px;
+  }
+  .stat .n{
+    font-size:clamp(26px,3vw,32px);
+    font-weight:700;
+    color:var(--accent);
+    line-height:1;
+  }
+  .stat .l{
+    margin-top:8px;
+    font-size:13.5px;
+    color:var(--ink-soft);
+    line-height:1.4;
+  }
+  .stat .cite{
+    margin-top:8px;
+    font-size:11px;
+    color:var(--ink-faint);
+  }
+
+  /* Bar chart */
+  .chart{margin:30px 0 8px; background:var(--paper-raised); border:1px solid var(--line); border-radius:8px; padding:26px 26px 20px; box-shadow:var(--shadow);}
+  .chart h4{font-family:inherit; font-size:14.5px; font-weight:600; margin:0 0 4px; color:var(--ink);}
+  .chart .chartnote{font-size:12.5px; color:var(--ink-faint); margin-bottom:20px;}
+  .barrow{display:grid; grid-template-columns:132px 1fr 64px; align-items:center; gap:12px; margin-bottom:11px;}
+  .barrow .lbl{font-size:13px; color:var(--ink-soft);}
+  .barrow.hl .lbl{color:var(--ink); font-weight:600;}
+  .bartrack{background:var(--bar-track); border-radius:3px; height:12px; overflow:hidden;}
+  .barfill{height:100%; border-radius:3px; background:var(--ink-faint); opacity:0.55;}
+  .barrow.hl .barfill{background:var(--accent); opacity:1;}
+  .barval{font-size:12.5px; text-align:right; color:var(--ink-soft);}
+  .barrow.hl .barval{color:var(--ink); font-weight:700;}
+
+  .legend{display:flex; gap:20px; font-size:12.5px; color:var(--ink-soft); margin-bottom:18px;}
+  .legend span{display:inline-flex; align-items:center; gap:7px;}
+  .swatch{width:10px; height:10px; border-radius:2px; display:inline-block;}
+
+  .pairbar{display:grid; grid-template-columns:150px 1fr; align-items:center; gap:14px; margin-bottom:14px;}
+  .pairbar .lbl{font-size:13px; color:var(--ink-soft);}
+  .pairtrack{display:flex; flex-direction:column; gap:5px;}
+  .prow{display:grid; grid-template-columns:1fr 42px; align-items:center; gap:8px;}
+  .ptrack{background:var(--bar-track); border-radius:3px; height:9px; overflow:hidden;}
+  .pfill{height:100%; border-radius:3px;}
+  .pfill.a{background:var(--accent);}
+  .pfill.b{background:var(--accent-2);}
+  .pval{font-size:11.5px; color:var(--ink-soft); text-align:right;}
+
+  /* lists */
+  ul.plain{margin:16px 0; padding:0; list-style:none;}
+  ul.plain li{
+    padding:12px 0;
+    border-top:1px solid var(--line);
+    font-size:15.5px;
+    color:var(--ink-soft);
+    display:grid;
+    grid-template-columns:auto 1fr;
+    gap:14px;
+  }
+  ul.plain li:last-child{border-bottom:1px solid var(--line);}
+  ul.plain b{color:var(--ink); font-weight:600;}
+  ul.plain .tag{
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size:11px;
+    color:var(--accent);
+    padding-top:2px;
+    white-space:nowrap;
+  }
+
+  .pull{
+    margin:28px 0;
+    padding:18px 22px;
+    border-left:3px solid var(--accent);
+    background:var(--paper-raised);
+    font-size:16.5px;
+    color:var(--ink);
+    border-radius:0 6px 6px 0;
+  }
+  .pull .src{display:block; margin-top:8px; font-size:12px; color:var(--ink-faint); font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;}
+
+  .callout{
+    margin:24px 0;
+    padding:16px 20px;
+    background:var(--paper-raised);
+    border:1px solid var(--line);
+    border-radius:8px;
+    font-size:14.5px;
+    color:var(--ink-soft);
+  }
+  .callout b{color:var(--ink);}
+
+  /* reading list */
+  .readlist{border-top:1px solid var(--line); margin-top:24px;}
+  .readitem{
+    display:grid;
+    grid-template-columns:100px 1fr;
+    gap:18px;
+    padding:16px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .readitem .pg{
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size:13px;
+    color:var(--accent-2);
+    padding-top:2px;
+  }
+  .readitem .rt{font-size:15px; color:var(--ink); font-weight:600; margin-bottom:3px;}
+  .readitem .rd{font-size:14px; color:var(--ink-soft);}
+
+  /* roadmap */
+  .phase{
+    display:grid;
+    grid-template-columns:56px 1fr;
+    gap:22px;
+    position:relative;
+    padding-bottom:36px;
+  }
+  .phase:last-child{padding-bottom:0;}
+  .phase .rail{position:relative; display:flex; flex-direction:column; align-items:center;}
+  .phase .dot{
+    width:14px; height:14px; border-radius:50%;
+    background:var(--accent);
+    border:3px solid var(--paper);
+    box-shadow:0 0 0 1px var(--line);
+    margin-top:4px;
+    z-index:1;
+  }
+  .phase .stem{flex:1; width:1px; background:var(--line); margin-top:4px;}
+  .phase:last-child .stem{display:none;}
+  .phase .when{
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size:11.5px; color:var(--accent); text-transform:uppercase; letter-spacing:0.06em;
+    margin-bottom:6px;
+  }
+  .phase h3{font-size:19px; margin-bottom:8px;}
+  .phase p{font-size:15.5px; color:var(--ink-soft);}
+  .phase .grounding{
+    margin-top:10px; font-size:13px; color:var(--ink-faint);
+    padding:10px 14px; background:var(--paper-raised); border-radius:6px; border:1px solid var(--line);
+  }
+
+  footer{
+    padding:36px 24px 60px;
+    text-align:center;
+    font-size:12.5px;
+    color:var(--ink-faint);
+  }
+  footer a{color:var(--ink-faint); text-decoration:underline;}
+
+  @media (max-width:640px){
+    .barrow{grid-template-columns:96px 1fr 54px;}
+    .readitem{grid-template-columns:70px 1fr;}
+  }
+</style>
+
+<div class="masthead">
+  <div class="inner">
+    <div class="eyebrow"><span class="dot"></span> Stanford HAI · AI Index Report 2026 · 425 Seiten, 9 Kapitel · Teil 1/2</div>
+    <h1>Was der AI Index 2026 dir konkret bringt</h1>
+    <p class="sub">Ein Briefing für den Weg von „Claude verstehen“ zu „mit Claude produzieren“ — mit jeder Zahl aus dem Originalreport, samt Seitenangabe.</p>
+    <div class="meta">
+      <div><b>9.</b> Ausgabe des Reports</div>
+      <div><b>April 2026</b> veröffentlicht</div>
+      <div><b>DOI</b> 10.48550/arXiv.2606.15708</div>
+    </div>
+    <div class="companion">Teil 2 dieser Auswertung: die <b>Marktlücken-Analyse</b> — separates Artifact, verlinkt am Ende dieser Seite.</div>
+  </div>
+</div>
+
+<main>
+
+<section class="wrap">
+  <span class="kicker">Einordnung</span>
+  <h2 class="title">Was der Report eigentlich ist</h2>
+  <p class="lede">Kein Marketing-Papier, sondern der jährliche Referenzbericht des Stanford Institute for Human-Centered AI — 9. Ausgabe, getragen von einem Steering Committee aus Anthropic, Google, OECD, Stanford, Northeastern u. a. Er bündelt Daten aus über 30 Quellen (Epoch AI, LinkedIn, McKinsey, Quid, Anthropic Economic Index, Pew) statt Meinungen.</p>
+  <p>Der rote Faden 2026: <b>die Lücke zwischen Fähigkeit und Vorbereitung wächst.</b> Modelle, Wirtschaft und Nutzerzahlen beschleunigen schneller, als Institutionen, Schulen und selbst Benchmarks mithalten können. Für dich heißt das konkret: Wer sich <i>jetzt</i> selbst ein reales, differenziertes Bild verschafft — statt auf Hype oder Panik zu reagieren — hat einen echten Vorsprung, weil die meisten Institutionen das noch nicht tun. Genau das macht den Report lesenswert: er ist eine der wenigen Quellen, die Fähigkeit, Wirtschaft und Wahrnehmung sauber auseinanderhält.</p>
+
+  <div class="statgrid">
+    <div class="stat"><div class="n">88%</div><div class="l">Unternehmen setzen inzwischen irgendeine Form von KI ein (von 78% in 2024)</div><div class="cite">S. 173</div></div>
+    <div class="stat"><div class="n">53%</div><div class="l">Bevölkerungs-Adoption von generativer KI in nur 3 Jahren — schneller als PC oder Internet</div><div class="cite">S. 10, 173</div></div>
+    <div class="stat"><div class="n">$172 Mrd.</div><div class="l">geschätzter jährlicher Konsumentennutzen generativer KI in den USA, 2026</div><div class="cite">S. 10, 192</div></div>
+    <div class="stat"><div class="n">#1</div><div class="l">Claude Opus 4.6 führt die Arena-Rangliste aller Modelle weltweit (Stand März 2026)</div><div class="cite">S. 72, 78</div></div>
+  </div>
+</section>
+
+<section class="wrap">
+  <span class="kicker">Kapitel 2 · Technical Performance</span>
+  <h2 class="title">Wo Claude technisch wirklich steht</h2>
+  <p class="chapter-tag">PDF-Seiten 69–125</p>
+  <p>Das ist das Kapitel, das dich am direktesten betrifft, wenn du „dich mit Claude auskennen" willst: Auf der großen Arena-Rangliste (menschliche Vergleichsurteile über alle Modelle hinweg) liegt <b>Anthropic mit 1.503 Elo-Punkten aktuell vorn</b> — knapp vor xAI (1.495), Google (1.494) und OpenAI (1.481). Der Abstand zum besten chinesischen Modell beträgt nur noch 2,7% — der US-China-Wettlauf ist praktisch ausgeglichen.</p>
+
+  <div class="chart">
+    <h4>Modell-Ranking nach Elo-Score, März 2026</h4>
+    <div class="chartnote">LMArena-Leaderboard nach Anbieter · Claude Opus 4.6 führt knapp vor der Konkurrenz</div>
+    <div class="barrow hl"><div class="lbl">Anthropic</div><div class="bartrack"><div class="barfill" style="width:100%"></div></div><div class="barval num">1.503</div></div>
+    <div class="barrow"><div class="lbl">xAI</div><div class="bartrack"><div class="barfill" style="width:97.1%"></div></div><div class="barval num">1.495</div></div>
+    <div class="barrow"><div class="lbl">Google</div><div class="bartrack"><div class="barfill" style="width:96.5%"></div></div><div class="barval num">1.494</div></div>
+    <div class="barrow"><div class="lbl">OpenAI</div><div class="bartrack"><div class="barfill" style="width:92.1%"></div></div><div class="barval num">1.481</div></div>
+    <div class="barrow"><div class="lbl">Alibaba</div><div class="bartrack"><div class="barfill" style="width:73.6%"></div></div><div class="barval num">1.449</div></div>
+    <div class="barrow"><div class="lbl">DeepSeek</div><div class="bartrack"><div class="barfill" style="width:53.9%"></div></div><div class="barval num">1.424</div></div>
+    <div class="barrow"><div class="lbl">Mistral</div><div class="bartrack"><div class="barfill" style="width:44.3%"></div></div><div class="barval num">1.416</div></div>
+    <div class="barrow"><div class="lbl">Meta</div><div class="bartrack"><div class="barfill" style="width:0%"></div></div><div class="barval num">1.335</div></div>
+  </div>
+
+  <p>Wichtiger als die Gesamtrangliste ist, <b>wofür</b> Claude konkret führt — das sind genau die Fähigkeiten, die für „produzieren" relevant sind:</p>
+
+  <ul class="plain">
+    <li><span class="tag">S. 100</span><div><b>SWE-bench Verified (reales Software-Engineering):</b> Claude 4.5 Opus führt mit ~76,8% — der Wert lag ein Jahr zuvor noch bei 60%.</div></li>
+    <li><span class="tag">S. 113</span><div><b>OSWorld (Computer selbstständig bedienen):</b> Claude Opus 4.5 führt mit 66,3% — nur 6 Punkte hinter menschlichem Niveau (72,4%). Vor einem Jahr lag der Bestwert bei 12%.</div></li>
+    <li><span class="tag">S. 84</span><div><b>Function/Tool-Calling (Agenten-Fähigkeit):</b> Claude Opus 4.5 führt mit 77,5%, 3 der Top-6 Plätze sind Claude-Modelle.</div></li>
+    <li><span class="tag">S. 102</span><div><b>Vibe Code Bench (Code aus natürlicher Sprache):</b> Claude Opus 4.6 führt mit 56,5%.</div></li>
+    <li><span class="tag">S. 109, 115</span><div><b>Finance Agent / τ-bench (mehrstufige Werkzeugnutzung):</b> Claude Sonnet 4.6 bzw. Opus 4.5 führen jeweils.</div></li>
+  </ul>
+
+  <div class="pull">Modelle gewinnen Gold bei der Mathe-Olympiade, lesen aber nur in 50,1% der Fälle korrekt eine analoge Uhr. Der Report nennt das die <b>„jagged frontier"</b> — eine völlig ungleichmäßige Fähigkeitslandschaft.<span class="src">Top Takeaway 4, S. 9 · ClockBench-Detail S. 97</span></div>
+
+  <p>Ehrlich dazu: Claude ist nicht überall vorn. Bei reinem Multimodal-Verständnis (MMMU) und beim abstrakten Reasoning-Test ARC-AGI-2 führt Google Gemini 3.1 deutlich (88,2% bzw. 84,6% vs. Claudes ~84% bzw. ~69%). Und ausgerechnet Claude Opus 4.6 schneidet auf ClockBench mit 8,9% am schlechtesten von allen getesteten Modellen ab (S. 97) — ein gutes Beispiel für die „jagged frontier" in der Praxis: stark bei komplexen Agenten-Aufgaben, schwach bei simpler visueller Wahrnehmung.</p>
+</section>
+
+<section class="wrap">
+  <span class="kicker teal">Kapitel 4 · Economy</span>
+  <h2 class="title">Der wirtschaftliche Hebel — und wo die Chance liegt</h2>
+  <p class="chapter-tag">PDF-Seiten 172–230</p>
+  <p>Das ökonomisch wichtigste Kapitel für dein Ziel „Dinge produzieren und generieren". Zwei Zahlen stechen heraus: Der Konsumentennutzen generativer KI in den USA stieg von 112 auf 172 Mrd. USD/Jahr (+53,6%), der <b>Median-Wert pro Nutzer verdreifachte sich</b> von 3,40 auf 11,40 USD — der stärkste Einzelprädiktor dafür war schlicht <b>Nutzungshäufigkeit</b> (S. 192).</p>
+
+  <div class="chart">
+    <h4>Gemessene Produktivitätsgewinne durch KI-Einsatz, nach Tätigkeit</h4>
+    <div class="chartnote">Aus kontrollierten Feldstudien, zusammengefasst im Economy-Kapitel (S. 219–221)</div>
+    <div class="barrow hl"><div class="lbl">Accounting</div><div class="bartrack"><div class="barfill" style="width:100%"></div></div><div class="barval num">+55%</div></div>
+    <div class="barrow hl"><div class="lbl">Marketing</div><div class="bartrack"><div class="barfill" style="width:91%"></div></div><div class="barval num">+50%</div></div>
+    <div class="barrow hl"><div class="lbl">Software-Dev</div><div class="bartrack"><div class="barfill" style="width:47%"></div></div><div class="barval num">+26%</div></div>
+    <div class="barrow"><div class="lbl">Kundensupport</div><div class="bartrack"><div class="barfill" style="width:27%"></div></div><div class="barval num">+14–15%</div></div>
+  </div>
+
+  <p>Die Kehrseite: Diese Gewinne konzentrieren sich auf strukturierte, klar messbare Aufgaben — nicht auf tiefes Urteilsvermögen. Und sie treffen ausgerechnet die jüngste Kohorte im Arbeitsmarkt am härtesten: <b>Beschäftigung von Softwareentwicklern im Alter 22–25 ist seit 2024 um fast 20% gefallen</b>, während ältere Entwickler weiter eingestellt werden (S. 173, 222).</p>
+
+  <div class="callout"><b>Die eigentliche Marktlücke:</b> KI-Agenten-Einsatz liegt in fast allen Geschäftsfunktionen noch im einstelligen Prozentbereich — selbst im am weitesten fortgeschrittenen Bereich (Software Engineering) sind es nur 24% mit skaliertem Einsatz (S. 197). Der Bereich, in dem Claude laut Kapitel 2 technisch am stärksten ist (Agenten, Coding, Tool-Nutzung), ist wirtschaftlich also noch am wenigsten ausgeschöpft. Mehr dazu in der Marktlücken-Analyse (Teil 2).</div>
+
+  <p>Und eine Zahl, die zeigt, wie weit Hype und Realität auseinanderliegen: 46,1% der Beschäftigten wünschen sich explizit, dass KI bestimmte ihrer Aufgaben übernimmt — genau diese Aufgaben machen aber nur <b>1,3% der tatsächlichen Claude.ai-Nutzung</b> aus (S. 225). Die Automatisierung passiert nicht dort, wo die Nachfrage am größten wäre — noch nicht.</p>
+</section>
+
+<section class="wrap">
+  <span class="kicker">Kapitel 7 · Education</span>
+  <h2 class="title">Wie man sich die Skills selbst aneignet</h2>
+  <p class="chapter-tag">PDF-Seiten 289–322</p>
+  <p>Das ist der Beleg dafür, dass dein geplanter Weg — erst verstehen, dann produzieren, weitgehend im Selbststudium — genau der Weg ist, den der Report als tragfähig beschreibt: <b>„Zertifikate, Onlinekurse und praktisches Lernen sind Pfade, die auch Menschen ohne tiefen CS- oder Mathe-Hintergrund Zugang verschaffen"</b> (S. 319). Formale Bildung hinkt hinterher — informelles Lernen ist bereits der Haupttreiber von KI-Kompetenz.</p>
+
+  <div class="statgrid">
+    <div class="stat"><div class="n">80%</div><div class="l">Studierende weltweit nutzen generative KI zum Lernen (2025) — 2023 waren es 40%</div><div class="cite">S. 303</div></div>
+    <div class="stat"><div class="n">56%</div><div class="l">nutzen KI mindestens täglich, sobald sie einmal angefangen haben</div><div class="cite">S. 303</div></div>
+    <div class="stat"><div class="n">39,8%</div><div class="l">der Claude-Nutzung durch Studierende entfällt auf „Erschaffen" — die höchste kognitive Stufe, laut Anthropic-Analyse</div><div class="cite">S. 304</div></div>
+  </div>
+
+  <p>Konkret gefragt sind laut LinkedIn-Kompetenzdaten für die USA 2025 vor allem: <b>KI-Agenten, KI-Produktivität, KI-Strategie, LLMOps</b> (technische Seite) sowie <b>Prompting, GitHub Copilot, Microsoft Copilot</b> (Anwender-Seite) — S. 322. Genau diese Kombination — Prompting-Grundlagen plus Agenten/Automatisierung — deckt sich mit dem, wo Claude laut Kapitel 2 am weitesten ist.</p>
+</section>
+
+<section class="wrap">
+  <span class="kicker teal">Kapitel 9 · Public Opinion</span>
+  <h2 class="title">Erwartung vs. Realität — die Wahrnehmungslücke als Chance</h2>
+  <p class="chapter-tag">PDF-Seiten 361–384</p>
+  <p>Die vielleicht wichtigste Erkenntnis für deine eigene Positionierung: Fachleute und die Öffentlichkeit schätzen die Zukunft von KI komplett unterschiedlich ein. Wer sich informiert, denkt näher an der Expertenmeinung — und das ist laut Report bereits ein messbarer Vorteil.</p>
+
+  <div class="chart">
+    <h4>Erwarteter positiver Effekt von KI über die nächsten 20 Jahre</h4>
+    <div class="legend">
+      <span><i class="swatch" style="background:var(--accent)"></i>Fachleute</span>
+      <span><i class="swatch" style="background:var(--accent-2)"></i>Öffentlichkeit (USA)</span>
+    </div>
+    <div class="pairbar">
+      <div class="lbl">Medizin</div>
+      <div class="pairtrack">
+        <div class="prow"><div class="ptrack"><div class="pfill a" style="width:84%"></div></div><div class="pval num">84%</div></div>
+        <div class="prow"><div class="ptrack"><div class="pfill b" style="width:44%"></div></div><div class="pval num">44%</div></div>
+      </div>
+    </div>
+    <div class="pairbar">
+      <div class="lbl">Jobs</div>
+      <div class="pairtrack">
+        <div class="prow"><div class="ptrack"><div class="pfill a" style="width:73%"></div></div><div class="pval num">73%</div></div>
+        <div class="prow"><div class="ptrack"><div class="pfill b" style="width:23%"></div></div><div class="pval num">23%</div></div>
+      </div>
+    </div>
+    <div class="pairbar">
+      <div class="lbl">Wirtschaft</div>
+      <div class="pairtrack">
+        <div class="prow"><div class="ptrack"><div class="pfill a" style="width:69%"></div></div><div class="pval num">69%</div></div>
+        <div class="prow"><div class="ptrack"><div class="pfill b" style="width:21%"></div></div><div class="pval num">21%</div></div>
+      </div>
+    </div>
+    <div class="pairbar">
+      <div class="lbl">Schulbildung</div>
+      <div class="pairtrack">
+        <div class="prow"><div class="ptrack"><div class="pfill a" style="width:61%"></div></div><div class="pval num">61%</div></div>
+        <div class="prow"><div class="ptrack"><div class="pfill b" style="width:24%"></div></div><div class="pval num">24%</div></div>
+      </div>
+    </div>
+    <div class="chartnote" style="margin-top:14px; margin-bottom:0;">Pew-Umfrage, zitiert S. 372 · Lücke bei Jobs: 50 Prozentpunkte</div>
+  </div>
+
+  <p>Interessant für dich persönlich: Bei „Jobs, die KI wegrationalisiert" schätzen Fachleute Softwareentwickler mit 62% Risiko sogar <b>höher</b> ein als die Öffentlichkeit (33%) — Fachleute sind hier also pessimistischer als Laien (S. 375). Gleichzeitig ist genau das der Bereich, in dem Claude aktuell die stärksten Produktivitätsgewinne liefert. Beides gleichzeitig wahr zu halten — Werkzeug UND Verdrängungsrisiko — ist die realistische Lesart des Reports.</p>
+</section>
+
+<section class="wide">
+  <span class="kicker">Pflichtlektüre</span>
+  <h2 class="title">Was du dir im Original unbedingt ansehen solltest</h2>
+  <p class="chapter-tag">Kuratierte Auswahl aus 425 Seiten — der Rest ist Vertiefung, das hier ist der Kern</p>
+
+  <div class="readlist">
+    <div class="readitem"><div class="pg">S. 9–11</div><div><div class="rt">Top Takeaways (15 Punkte)</div><div class="rd">Die komprimierteste Zusammenfassung des gesamten Reports — 10 Minuten Lesezeit für den kompletten Überblick.</div></div></div>
+    <div class="readitem"><div class="pg">S. 72–73</div><div><div class="rt">Chapter Highlights „Technical Performance"</div><div class="rd">Zeigt in 11 Punkten, wo Modelle wirklich stehen — inkl. der „jagged frontier"-Beispiele, die dir helfen, KI-Output richtig zu kalibrieren statt blind zu vertrauen.</div></div></div>
+    <div class="readitem"><div class="pg">S. 78, 100, 113</div><div><div class="rt">Arena-Ranking, SWE-bench, OSWorld</div><div class="rd">Die drei Charts, die zeigen, wofür Claude aktuell konkret die beste Wahl ist (Agenten, Coding, Computer-Bedienung).</div></div></div>
+    <div class="readitem"><div class="pg">S. 199–203</div><div><div class="rt">Anthropic Economic Index / AI Usage Index</div><div class="rd">Wie Claude tatsächlich weltweit genutzt wird — nach Aufgabentyp und Land. Guter Realitätscheck gegen die eigene Nutzung.</div></div></div>
+    <div class="readitem"><div class="pg">S. 219–225</div><div><div class="rt">Produktivität &amp; Arbeitsmarkt-Effekte</div><div class="rd">Die Studien hinter den Produktivitätszahlen — zeigt auch den „Learning Penalty" bei reiner KI-Abhängigkeit ohne eigenes Verständnis.</div></div></div>
+    <div class="readitem"><div class="pg">S. 303–304, 319–322</div><div><div class="rt">Wie Menschen sich KI-Skills selbst aneignen</div><div class="rd">Direkt relevant für deinen Lernpfad — inkl. der konkret gefragtesten Fähigkeiten 2025/26.</div></div></div>
+    <div class="readitem"><div class="pg">S. 372–375</div><div><div class="rt">Experten- vs. Publikumsmeinung</div><div class="rd">Kalibriert die eigene Erwartungshaltung — realistisch optimistisch statt Hype oder Angst.</div></div></div>
+  </div>
+</section>
+
+<section class="wrap">
+  <span class="kicker">Dein Weg</span>
+  <h2 class="title">Vom Verstehen zum Produzieren</h2>
+  <p class="lede">Drei Phasen, jede direkt aus einem Befund des Reports abgeleitet — kein generischer Lernplan.</p>
+
+  <div style="margin-top:36px;">
+    <div class="phase">
+      <div class="rail"><div class="dot"></div><div class="stem"></div></div>
+      <div>
+        <div class="when">Phase 1 · jetzt bis ca. 4 Wochen</div>
+        <h3>Fundament: Claude täglich benutzen, nicht nur lesen</h3>
+        <p>Verstehe, wie Modelle wirklich funktionieren — Kontext, Reasoning-Modi, warum Ergebnisse mal brillant und mal daneben sind (die „jagged frontier"). Baue dir eine kalibrierte Erwartungshaltung auf: gut bei komplexem Reasoning und Agentenaufgaben, unzuverlässig bei simplen Wahrnehmungsfragen.</p>
+        <div class="grounding">Begründung aus dem Report: Nutzungshäufigkeit ist der stärkste Einzelprädiktor für den erzielten Wert aus generativer KI (S. 192) — Verstehen entsteht durch Nutzung, nicht durch Zuschauen.</div>
+      </div>
+    </div>
+    <div class="phase">
+      <div class="rail"><div class="dot"></div><div class="stem"></div></div>
+      <div>
+        <div class="when">Phase 2 · Monat 1–3</div>
+        <h3>Agentische Skills gezielt aufbauen</h3>
+        <p>Fokus auf genau die Fähigkeiten, die laut Report sowohl am schnellsten wachsen als auch dort liegen, wo Claude am stärksten führt: Prompting sauber beherrschen, dann Richtung Agenten/Automatisierung (Claude Code, Sub-Agents, Tool-Nutzung, Skills) weiterentwickeln — nicht bei reinem Chat stehenbleiben.</p>
+        <div class="grounding">Begründung aus dem Report: Claude führt gerade bei Agenten-Benchmarks (SWE-bench, OSWorld, Function-Calling), und „KI-Agenten" ist die am schnellsten wachsende Skill-Kategorie in den USA 2025 (S. 100, 113, 322). Gleichzeitig liegt der Agenten-Einsatz in Unternehmen noch im einstelligen Bereich — wer hier früh kompetent ist, hat einen realen Vorsprung.</div>
+      </div>
+    </div>
+    <div class="phase">
+      <div class="rail"><div class="dot"></div></div>
+      <div>
+        <div class="when">Phase 3 · ab Monat 3</div>
+        <h3>Produzieren statt konsumieren</h3>
+        <p>Wechsel von „mit Claude lernen" zu „mit Claude ausliefern": Content, Code, Automatisierungen, eigene kleine Tools — mit echtem eigenem Anteil an Verständnis, nicht als reines Copy-Paste. Die höchste gemessene Claude-Nutzung von Studierenden liegt bereits bei „Erschaffen" (39,8%) — das ist der Modus, den du ausbauen willst.</p>
+        <div class="grounding">Warnung aus dem Report: Wer KI nur zum schnellen Nachschlagen nutzt statt zur konzeptionellen Auseinandersetzung, zeigt einen „Learning Penalty" — keine Geschwindigkeitsgewinne trotz Tool-Einsatz (S. 220, Shen &amp; Tamkin 2025). Tiefe schlägt reine Tool-Nutzung — das ist gleichzeitig der Unterschied zwischen den Berufseinsteigern, die laut Kapitel 4 unter Druck geraten, und denen, die sich differenzieren.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  Alle Zahlen und Seitenangaben aus: Stanford HAI, „The AI Index 2026 Annual Report", April 2026 — extrahiert und zusammengefasst aus der lokalen PDF-Datei, gegen den Volltext geprüft. Kein Ersatz für den Originalreport.<br>
+  Teil 2 dieser Auswertung: die Marktlücken-Analyse (separates Artifact „AI Index 2026 — Marktlücken").
+</footer>

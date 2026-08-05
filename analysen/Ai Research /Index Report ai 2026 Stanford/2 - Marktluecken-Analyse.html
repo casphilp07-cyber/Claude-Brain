@@ -1,0 +1,280 @@
+<meta charset="UTF-8">
+<title>AI Index 2026 — Marktlücken</title>
+<meta name="description" content="Marktlücken-Analyse auf Basis des Stanford AI Index Report 2026: sieben Chancen zwischen Modell-Fähigkeit und tatsächlichem Angebot, mit Beleg und Einstiegshürde.">
+<style>
+  :root{
+    --paper: #EFEEE7;
+    --paper-raised: #F8F7F2;
+    --ink: #1A1D2B;
+    --ink-soft: #4B5063;
+    --ink-faint: #8B8D7F;
+    --accent: #C4622D;
+    --accent-2: #1B8A73;
+    --line: #DAD7C9;
+    --bar-track: #E2E0D3;
+    --shadow: 0 1px 2px rgba(26,29,43,0.06), 0 8px 24px rgba(26,29,43,0.05);
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --paper: #14161B;
+      --paper-raised: #1B1E25;
+      --ink: #EDEBE3;
+      --ink-soft: #A6A9B8;
+      --ink-faint: #6E7280;
+      --accent: #C96C3A;
+      --accent-2: #2FA689;
+      --line: #2B2E38;
+      --bar-track: #23262F;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 12px 28px rgba(0,0,0,0.35);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper: #14161B; --paper-raised: #1B1E25; --ink: #EDEBE3; --ink-soft: #A6A9B8;
+    --ink-faint: #6E7280; --accent: #C96C3A; --accent-2: #2FA689; --line: #2B2E38;
+    --bar-track: #23262F; --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 12px 28px rgba(0,0,0,0.35);
+    color-scheme: dark;
+  }
+  :root[data-theme="light"]{
+    --paper: #EFEEE7; --paper-raised: #F8F7F2; --ink: #1A1D2B; --ink-soft: #4B5063;
+    --ink-faint: #8B8D7F; --accent: #C4622D; --accent-2: #1B8A73; --line: #DAD7C9;
+    --bar-track: #E2E0D3; --shadow: 0 1px 2px rgba(26,29,43,0.06), 0 8px 24px rgba(26,29,43,0.05);
+    color-scheme: light;
+  }
+
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family: -apple-system, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size:17px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}
+  }
+  a{color:var(--accent);}
+  h1,h2,h3{
+    font-family: Georgia, "Iowan Old Style", "Palatino Linotype", "Times New Roman", serif;
+    text-wrap:balance;
+    font-weight:600;
+    letter-spacing:-0.01em;
+    margin:0;
+  }
+  .mono, .num{
+    font-family: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+  .wrap{max-width:760px; margin:0 auto; padding:0 24px;}
+  .wide{max-width:920px; margin:0 auto; padding:0 24px;}
+
+  /* Masthead */
+  .masthead{
+    background:var(--ink);
+    color:var(--paper);
+    padding:64px 24px 48px;
+  }
+  .masthead .inner{max-width:920px; margin:0 auto;}
+  .eyebrow{
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size:12px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    opacity:0.68;
+    display:flex;
+    gap:10px;
+    align-items:center;
+    margin-bottom:18px;
+    flex-wrap:wrap;
+  }
+  .eyebrow .dot{width:5px; height:5px; border-radius:50%; background:var(--accent);}
+  .masthead h1{
+    font-size:clamp(32px, 5vw, 46px);
+    line-height:1.08;
+    color:var(--paper);
+  }
+  .masthead .sub{
+    margin-top:16px;
+    font-size:18px;
+    max-width:62ch;
+    opacity:0.82;
+    line-height:1.55;
+  }
+  .companion{
+    margin-top:28px;
+    padding:12px 16px;
+    border:1px solid rgba(239,238,231,0.22);
+    border-radius:8px;
+    font-size:13px;
+    opacity:0.85;
+    display:inline-block;
+  }
+  .companion a{color:var(--paper); text-decoration:underline; opacity:1;}
+
+  main{padding:0 0 80px;}
+
+  section{padding:56px 0;}
+  section + section{border-top:1px solid var(--line);}
+
+  .kicker{
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size:12px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:10px;
+    display:block;
+  }
+  h2.title{font-size:clamp(24px,3.4vw,30px); margin-bottom:6px;}
+  .chapter-tag{
+    font-size:13px;
+    color:var(--ink-faint);
+    margin-bottom:22px;
+  }
+  p{margin:0 0 16px;}
+  p:last-child{margin-bottom:0;}
+  .lede{font-size:19px; color:var(--ink-soft); max-width:68ch;}
+
+  .pull{
+    margin:28px 0;
+    padding:18px 22px;
+    border-left:3px solid var(--accent);
+    background:var(--paper-raised);
+    font-size:16.5px;
+    color:var(--ink);
+    border-radius:0 6px 6px 0;
+  }
+  .pull .src{display:block; margin-top:8px; font-size:12px; color:var(--ink-faint); font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;}
+
+  /* Gap analysis */
+  .hurdlelegend{display:flex; gap:20px; flex-wrap:wrap; font-size:12.5px; color:var(--ink-faint); margin:24px 0 28px;}
+  .hurdlelegend span{display:inline-flex; align-items:center; gap:7px;}
+  .hurdlelegend .d{width:7px; height:7px; border-radius:50%;}
+  .hurdlelegend .d.low{background:var(--accent-2);}
+  .hurdlelegend .d.mid{background:var(--ink-faint);}
+  .hurdlelegend .d.high{background:var(--accent);}
+
+  .gaplist{display:flex; flex-direction:column; gap:16px;}
+  .gapcard{border:1px solid var(--line); border-radius:10px; padding:22px 24px 24px; background:var(--paper-raised); box-shadow:var(--shadow);}
+  .gaphead{display:flex; justify-content:space-between; align-items:baseline; gap:16px; margin-bottom:12px; flex-wrap:wrap;}
+  .gaphead h3{font-size:18.5px; max-width:46ch;}
+  .hurdle{display:inline-flex; align-items:center; gap:6px; font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:0.06em; padding:4px 11px; border-radius:20px; border:1px solid var(--line); white-space:nowrap; color:var(--ink-soft); flex-shrink:0;}
+  .hurdle .d{width:7px; height:7px; border-radius:50%;}
+  .hurdle.low .d{background:var(--accent-2);}
+  .hurdle.mid .d{background:var(--ink-faint);}
+  .hurdle.high .d{background:var(--accent);}
+  .gapbody{display:grid; grid-template-columns:1fr 1fr; gap:22px;}
+  .gapbody .lbl2{display:block; font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:0.08em; color:var(--ink-faint); margin-bottom:7px;}
+  .gapbody .opp .lbl2{color:var(--accent-2);}
+  .gapbody div p{font-size:14.5px; color:var(--ink-soft); margin:0;}
+  .gapbody div p b{color:var(--ink);}
+
+  footer{
+    padding:36px 24px 60px;
+    text-align:center;
+    font-size:12.5px;
+    color:var(--ink-faint);
+  }
+  footer a{color:var(--ink-faint); text-decoration:underline;}
+
+  @media (max-width:640px){
+    .gapbody{grid-template-columns:1fr;}
+  }
+</style>
+
+<div class="masthead">
+  <div class="inner">
+    <div class="eyebrow"><span class="dot"></span> Stanford HAI · AI Index Report 2026 · Abschlussanalyse · Teil 2/2</div>
+    <h1>Marktlücken &amp; Möglichkeiten</h1>
+    <p class="sub">Quer über alle 9 Kapitel des AI Index Report 2026 gelesen: wo Fähigkeit, Nachfrage und tatsächliches Angebot auseinanderfallen — und was davon für eine Einzelperson zugänglich ist.</p>
+    <div class="companion">Teil 1: das <b>Haupt-Briefing</b> zu Claudes Stand, Wirtschaft und Lernpfad — separates Artifact „AI Index 2026 — Briefing".</div>
+  </div>
+</div>
+
+<main>
+
+<section class="wide">
+  <span class="kicker">Methode</span>
+  <h2 class="title">Wo dieselbe Lücke immer wieder auftaucht</h2>
+  <p class="lede">Der Report beschreibt an mehreren Stellen dasselbe Muster: etwas ist technisch schon möglich oder wirtschaftlich schon nachgefragt, aber noch nicht ernsthaft bedient. Genau diese Abstände sind die eigentlichen Marktlücken. Sieben davon, mit Beleg aus dem Report und einer ehrlichen Einschätzung, wie zugänglich sie für dich als Einzelperson sind.</p>
+
+  <div class="hurdlelegend">
+    <span><i class="d low"></i>niedrige Einstiegshürde — allein umsetzbar</span>
+    <span><i class="d mid"></i>mittel — braucht Spezialisierung/Zeit</span>
+    <span><i class="d high"></i>hoch — Team, Kapital oder Zulassung nötig</span>
+  </div>
+
+  <div class="gaplist">
+
+    <div class="gapcard">
+      <div class="gaphead"><h3>1. Agenten sind technisch reif, aber betrieblich kaum im Einsatz</h3><span class="hurdle mid"><i class="d"></i>mittel</span></div>
+      <div class="gapbody">
+        <div><span class="lbl2">Befund</span><p>Claude führt bei genau den Benchmarks, die reale Agenten-Arbeit messen (SWE-bench 76,8%, OSWorld 66,3%) — trotzdem liegt der <b>skalierte KI-Agenten-Einsatz in Unternehmen selbst im fortgeschrittensten Bereich (Software Engineering) nur bei 24%</b>, in den meisten Funktionen einstellig. (S. 100, 113, 197)</p></div>
+        <div class="opp"><span class="lbl2">Chance</span><p>Konkrete, kleine Agenten-Automatisierungen für einzelne Workflows bauen und verkaufen (nicht „noch ein Chatbot") — die Nachfrage nach Umsetzung übersteigt aktuell das Angebot an Leuten, die es wirklich können.</p></div>
+      </div>
+    </div>
+
+    <div class="gapcard">
+      <div class="gaphead"><h3>2. Der Wert landet beim Nutzer, nicht beim Anbieter</h3><span class="hurdle low"><i class="d"></i>niedrig</span></div>
+      <div class="gapbody">
+        <div><span class="lbl2">Befund</span><p>US-Konsumentennutzen generativer KI: <b>172 Mrd. USD/Jahr</b> — die addierten Jahresumsätze von OpenAI (25 Mrd.) und Anthropic (19 Mrd.) sind zusammen kleiner. Historisch behalten Anbieter neuer Technologien im Schnitt nur ~3% des gesellschaftlichen Werts selbst (Nordhaus-Zitat). (S. 189, 192)</p></div>
+        <div class="opp"><span class="lbl2">Chance</span><p>Nicht mit generischen Gratis-Chat-Wrappern konkurrieren, sondern schmale, zahlungsbereite Nischen bedienen, die noch niemand produktisiert hat — der Gesamtwert ist riesig, aber kaum eingefangen.</p></div>
+      </div>
+    </div>
+
+    <div class="gapcard">
+      <div class="gaphead"><h3>3. Gewünschte Automatisierung ≠ tatsächliche Nutzung</h3><span class="hurdle low"><i class="d"></i>niedrig</span></div>
+      <div class="gapbody">
+        <div><span class="lbl2">Befund</span><p><b>46,1%</b> der Beschäftigten wünschen sich explizit, dass KI bestimmte Aufgaben übernimmt — diese Aufgaben machen aber nur <b>1,3%</b> der echten Claude.ai-Nutzung aus. Nachfrage und Angebot laufen aktuell aneinander vorbei. (S. 225)</p></div>
+        <div class="opp"><span class="lbl2">Chance</span><p>Genau diese unbedienten Wunsch-Aufgaben in deinem eigenen Berufsfeld/Umfeld identifizieren und als erstes eigenes Tool oder Workflow angehen — echte, unbefriedigte Nachfrage statt erfundenes Problem.</p></div>
+      </div>
+    </div>
+
+    <div class="gapcard">
+      <div class="gaphead"><h3>4. Sprachen und Dialekte abseits von Standard-Englisch</h3><span class="hurdle mid"><i class="d"></i>mittel</span></div>
+      <div class="gapbody">
+        <div><span class="lbl2">Befund</span><p>Ein regional entwickeltes Modell schlägt GPT-5.1 und Gemini 2.5 Flash auf Arabisch; bei einem slowenischen Dialekt-Test verlieren führende Modelle rund die Hälfte ihrer Genauigkeit gegenüber Standardsprache. Große Labs optimieren strukturell zuerst für Englisch. (S. 128)</p></div>
+        <div class="opp"><span class="lbl2">Chance</span><p>Lokalisierte Inhalte, Prompts oder kleine Tools für Sprachen/Dialekte, die von den großen Anbietern spürbar schlechter bedient werden — messbar unterversorgt, nicht nur vermutet.</p></div>
+      </div>
+    </div>
+
+    <div class="gapcard">
+      <div class="gaphead"><h3>5. Profi-Domänen brauchen eine Vertrauens-Schicht, kein Rohmodell</h3><span class="hurdle high"><i class="d"></i>hoch</span></div>
+      <div class="gapbody">
+        <div><span class="lbl2">Befund</span><p>Bei Steuer-, Finanz- und Rechts-Benchmarks liegen die Top-15-Modelle nur 60–90% Genauigkeit und maximal 3 Punkte auseinander — kein Modell dominiert klar, und Fehler sind in diesen Domänen teuer. (S. 72)</p></div>
+        <div class="opp"><span class="lbl2">Chance</span><p>Prüf-/Freigabe-Schichten und Fachwissen um das Modell herum bauen statt reinen Modellzugriff zu verkaufen — braucht Domänenexpertise und Vertrauen, deshalb höhere Hürde, aber auch weniger Konkurrenz.</p></div>
+      </div>
+    </div>
+
+    <div class="gapcard">
+      <div class="gaphead"><h3>6. Wissens- und Budgetlücke bei kleineren Organisationen und Schulen</h3><span class="hurdle low"><i class="d"></i>niedrig</span></div>
+      <div class="gapbody">
+        <div><span class="lbl2">Befund</span><p>Hauptbarrieren für verantwortungsvollen KI-Einsatz in Unternehmen: Wissenslücken (59%), Budget (48%), regulatorische Unsicherheit (41%). Nur die Hälfte der US-Schulen hat überhaupt eine KI-Policy, nur 6% der Lehrkräfte finden sie klar. (S. 128, 290)</p></div>
+        <div class="opp"><span class="lbl2">Chance</span><p>Genau das ist dein eigener Lernpfad in vermarktbarer Form: Schulungen, Vorlagen, verständliche Beratung für KMU und Bildungseinrichtungen, die aufholen wollen, aber niemanden im Haus haben, der es ihnen erklärt.</p></div>
+      </div>
+    </div>
+
+    <div class="gapcard">
+      <div class="gaphead"><h3>7. Content-Produktion mit KI ist bereits belegt profitabel, nicht nur Theorie</h3><span class="hurdle low"><i class="d"></i>niedrig</span></div>
+      <div class="gapbody">
+        <div><span class="lbl2">Befund</span><p>Neueinsteiger, die LLMs für Content nutzten, verdreifachten ihren Output (+200%) bei gleichbleibender Qualität gegenüber KI-freien Autoren (Reimers &amp; Waldfogel 2026). Der höchste gemessene Anteil an Claude-Nutzung durch Studierende liegt bereits bei „Erschaffen" (39,8%). (S. 219–221, 304)</p></div>
+        <div class="opp"><span class="lbl2">Chance</span><p>Das ist kein Risiko-Investment, sondern ein belegter Hebel — passt direkt zu Phase 3 des Lernwegs im Haupt-Briefing: mit echtem Verständnis produzieren statt nur zu konsumieren.</p></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="pull">Das durchgängige Muster: Überall dort, wo der Report eine Lücke zwischen „was möglich ist" und „was tatsächlich passiert" zeigt, ist die Lücke größer als das, was die großen Anbieter selbst schließen werden — weil ihr Fokus auf generischen, breiten Modellen liegt. Die Chance für eine Einzelperson liegt fast immer <b>zwischen</b> dem Modell und dem konkreten, engen Anwendungsfall.<span class="src">Synthese aus Kapitel 2, 3, 4, 7 — S. 72, 128, 197, 219–225, 290</span></div>
+</section>
+
+</main>
+
+<footer>
+  Alle Zahlen und Seitenangaben aus: Stanford HAI, „The AI Index 2026 Annual Report", April 2026 — extrahiert und zusammengefasst aus der lokalen PDF-Datei, gegen den Volltext geprüft. Kein Ersatz für den Originalreport.<br>
+  Teil 1 dieser Auswertung: das Haupt-Briefing (separates Artifact „AI Index 2026 — Briefing").
+</footer>
